@@ -3,12 +3,27 @@ import Image from "next/image";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
-export default function MealSlugPage({ params }) {
-  const meal = getMeal(params.slug);
+function handleGetMeal(slug) {
+  const meal = getMeal(slug);
 
   if (!meal) {
     notFound();
   }
+
+  return meal;
+}
+
+export async function generateMetadata({ params }) {
+  const meal = handleGetMeal(params.slug);
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
+
+export default function MealSlugPage({ params }) {
+  const meal = handleGetMeal(params.slug);
 
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
 
