@@ -3,8 +3,8 @@ import Image from "next/image";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
-function handleGetMeal(slug) {
-  const meal = getMeal(slug);
+async function handleGetMeal(slug) {
+  const meal = await getMeal(slug);
 
   if (!meal) {
     notFound();
@@ -14,7 +14,7 @@ function handleGetMeal(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const meal = handleGetMeal(params.slug);
+  const meal = await handleGetMeal(params.slug);
 
   return {
     title: meal.title,
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function MealSlugPage({ params }) {
-  const meal = handleGetMeal(params.slug);
+export default async function MealSlugPage({ params }) {
+  const meal = await handleGetMeal(params.slug);
 
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
 
