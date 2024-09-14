@@ -87,3 +87,7 @@
 .actions button:focus {
   background: linear-gradient(90deg, #fd4715, #f9b241);
 }
+
+.error {
+  color: #fff;
+}
